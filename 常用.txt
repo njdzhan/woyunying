@@ -8,6 +8,8 @@ select systype2_name,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where c
 ----移网按人未处理工单量
 select user_nick,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null and systype2_='1274' group by user_nick;
 
+
+---start_date
 ----今日按人工单量（包括未处理），减掉未处理增加and end_date is not null
 select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') group by user_nick;
 ----按人处理工单量，增加专业（包括未处理）
@@ -20,6 +22,24 @@ select user_nick,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circl
 select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate-1,'yyyymmdd') group by user_nick;
 ----前一天按专业处理工单量（包括未处理）
 select systype2_name,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate-1,'yyyymmdd') group by systype2_name;
+
+
+---end_date
+----今日按人工单量（
+select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') group by user_nick;
+----按人处理工单量，增加专业
+select systype2_name,user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') group by systype2_name,user_nick;
+----按专业处理工单量
+select systype2_name,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') group by systype2_name;
+----移网按人处理工单量
+select user_nick,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') and systype2_='1274' group by user_nick;
+----前一天按人工单量
+select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate-1,'yyyymmdd') group by user_nick;
+----前一天按专业处理工单量
+select systype2_name,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate-1,'yyyymmdd') group by systype2_name;
+
+
+
 
 
 ----按天统计
