@@ -2,11 +2,11 @@
 ----按人未处理工单量
 select user_nick,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null group by user_nick;
 ----按人未处理工单量，增加专业
-select systype2_name,user_nick,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null group by systype2_name,user_nick;
+select systype2_name,user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null group by systype2_name,user_nick;
 ----按专业未处理工单量
-select systype2_name,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null group by systype2_name;
+select systype2_name,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null group by systype2_name;
 ----移网按人未处理工单量
-select user_nick,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null and systype2_='1274' group by user_nick;
+select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null and systype2_='1274' group by user_nick;
 
 
 ---start_date
@@ -15,13 +15,13 @@ select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND
 ----按人处理工单量，增加专业（包括未处理）
 select systype2_name,user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') group by systype2_name,user_nick;
 ----按专业处理工单量（包括未处理）
-select systype2_name,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') group by systype2_name;
+select systype2_name,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') group by systype2_name;
 ----移网按人处理工单量（包括未处理）
-select user_nick,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') and systype2_='1274' group by user_nick;
+select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') and systype2_='1274' group by user_nick;
 ----前一天按人工单量（包括未处理）
 select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate-1,'yyyymmdd') group by user_nick;
 ----前一天按专业处理工单量（包括未处理）
-select systype2_name,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate-1,'yyyymmdd') group by systype2_name;
+select systype2_name,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate-1,'yyyymmdd') group by systype2_name;
 
 
 ---end_date
@@ -30,13 +30,13 @@ select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND
 ----按人处理工单量，增加专业
 select systype2_name,user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') group by systype2_name,user_nick;
 ----按专业处理工单量
-select systype2_name,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') group by systype2_name;
+select systype2_name,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') group by systype2_name;
 ----移网按人处理工单量
-select user_nick,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') and systype2_='1274' group by user_nick;
+select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') and systype2_='1274' group by user_nick;
 ----前一天按人工单量
 select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate-1,'yyyymmdd') group by user_nick;
 ----前一天按专业处理工单量
-select systype2_name,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate-1,'yyyymmdd') group by systype2_name;
+select systype2_name,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate-1,'yyyymmdd') group by systype2_name;
 
 
 
@@ -50,3 +50,17 @@ where circle_id='12003' and start_date>sysdate-60 group by to_char(start_date,'y
 select to_char(start_date,'yyyymm'),count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW 
 where circle_id='12003' and start_date>sysdate-60 group by to_char(start_date,'yyyymm') order by to_char(start_date,'yyyymm');
 
+----新架构移网当日到达工单按照创建日期分布
+select to_char(a.create_date,'yyyymmdd'),count(distinct a.DEMAND_ID) from unicom_oop.DEMAND_VIEW a,unicom_oop.CIRCLERELEVANCEDEMAND_VIEW b
+ where a.DEMAND_ID=b.DEMAND_ID and b.circle_id='12003' and b.systype2_='1274' and to_char(start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd')
+ group by to_char(a.create_date,'yyyymmdd')
+ order by to_char(a.create_date,'yyyymmdd')
+
+----新架构移网今日到达工单
+select count(distinct a.DEMAND_ID) from unicom_oop.DEMAND_VIEW a,unicom_oop.CIRCLERELEVANCEDEMAND_VIEW b
+where a.DEMAND_ID=b.DEMAND_ID and b.circle_id='12003' and b.systype2_='1274'
+and to_char(b.start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd')
+
+----老架构移网今日到达工单
+select count(distinct a.DEMAND_ID) from unicom_oop.DEMAND_VIEW a,unicom_oop.CIRCLERELEVANCEDEMAND_VIEW b
+where a.DEMAND_ID=b.DEMAND_ID and b.circle_id='307' and b.systype3_='358'and to_char(b.start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd')
