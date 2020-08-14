@@ -7,6 +7,10 @@ select systype2_name,user_nick,count(distinct demand_id) from unicom_oop.CIRCLER
 select systype2_name,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null group by systype2_name;
 ----移网按人未处理工单量
 select user_nick,count(distinct demand_id) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null and systype2_='1274' group by user_nick;
+----未完工工单详情
+select b.user_nick,a.*,b.* from unicom_oop.DEMAND_VIEW a,unicom_oop.CIRCLERELEVANCEDEMAND_VIEW b
+ where a.DEMAND_ID=b.DEMAND_ID and b.circle_id='12003' and b.systype2_='1274' and b.end_date is null
+
 
 
 ---start_date
