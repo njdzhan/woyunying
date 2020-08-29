@@ -1,4 +1,33 @@
 --新架构
+
+---
+select dd.user_name,dd.user_nick,aa.su 前一天未处理工单,bb.su 当天收到工单,cc.su 当天处理工单,ee.su 当前未处理工单 from
+(select user_nick,count(distinct demand_id) su
+from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW 
+where circle_id='12003' and to_char(start_date,'yyyymmdd')<to_char(sysdate,'yyyymmdd') and (to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') or end_date is null)
+and systype2_='1274' 
+group by user_nick) aa,
+(select user_nick,count(distinct demand_id) su from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') and systype2_='1274' group by user_nick) bb,
+(select user_nick,count(distinct demand_id) su from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') and systype2_='1274' group by user_nick) cc,
+(select distinct user_name,user_nick from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where user_name in ('kangxm11','wangxy4031','xjgywyy','yinms3','zhuln41','yuby14','hanxz81','wangjing359','wangjc152','wuxj108','songtao_isf@si-tech.com.cn','chenlx20')) dd,
+(select user_nick,count(*) su from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null and systype2_='1274' group by user_nick) ee
+where dd.user_nick=aa.user_nick(+)
+and dd.user_nick=bb.user_nick(+)
+and dd.user_nick=cc.user_nick(+)
+and dd.user_nick=ee.user_nick(+)
+
+----
+select *
+from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW 
+where circle_id='12003' and (to_char(end_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd') or end_date is null)
+and systype2_='1274' and user_name='songtao_isf@si-tech.com.cn'
+
+select *
+from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW 
+where circle_id='12003' and to_char(start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd')
+and systype2_='1274' and user_name='songtao_isf@si-tech.com.cn'
+
+
 ----按人未处理工单量
 select user_nick,count(*) from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW where circle_id='12003' and end_date is null group by user_nick;
 ----按人未处理工单量，增加专业
