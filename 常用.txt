@@ -30,7 +30,7 @@ and systype2_='1274' and user_name='songtao_isf@si-tech.com.cn'
 
 select user_nick,count(distinct demand_id) su 
 from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW 
-where circle_id='12003' and to_char(start_date,'yyyymmdd') between '20200824'and '20200830'  and systype2_='1274' group by user_nick order by su desc
+where circle_id='12003' and to_char(start_date,'yyyymmdd') between '20200823'and '20200830'  and systype2_='1274' group by user_nick order by su desc
 
 
 select to_char(start_date,'yyyymmddhh24mi'),user_nick
@@ -109,3 +109,12 @@ and to_char(b.start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd')
 ----老架构移网今日到达工单
 select count(distinct a.DEMAND_ID) from unicom_oop.DEMAND_VIEW a,unicom_oop.CIRCLERELEVANCEDEMAND_VIEW b
 where a.DEMAND_ID=b.DEMAND_ID and b.circle_id='307' and b.systype3_='358'and to_char(b.start_date,'yyyymmdd')=to_char(sysdate,'yyyymmdd')
+
+----新架构移网近一周今日到达工单
+select count(distinct demand_id)
+from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW 
+where circle_id='12003' and start_date>sysdate-7  and systype2_='1274';
+----老架构移网近一周今日到达工单
+select count(distinct demand_id) 
+from unicom_oop.CIRCLERELEVANCEDEMAND_VIEW 
+where circle_id='573' and start_date>sysdate-7  and systype2_='409';
